@@ -33,3 +33,46 @@ Implementing Natural Language Processing (NLP) involves several key features and
 10. **Continuous Learning**: NLP models can benefit from continuous learning and adaptation to new data or changing language patterns. Techniques such as transfer learning or fine-tuning pre-trained models can aid in this process.
 
 These key features highlight the complexity and versatility of NLP implementations, which are essential for creating intelligent applications that can understand, process, and generate human language effectively.
+
+### Machine learning models
+In this project we compare the performance of several ML algorithms and configurations in binary text classification. Models are as follows:
+1. Logistic Regression
+2. Naive Bayes
+3. Random Forest
+
+### Deep learning model
+To build the neural network model, following steps are followed regarding its architecture:
+
+1. **Text Representation**: The text is represented using pre-trained text embeddings. This approach offers three main advantages: it eliminates the need for text preprocessing, leverages transfer learning benefits, and simplifies processing due to fixed-size embeddings.
+
+2. **Number of Layers**: The model architecture involves stacking layers, with specific decisions on how many layers to include.
+
+3. **Hidden Units per Layer**: Each layer in the neural network has a set number of hidden units, a critical decision affecting model complexity and performance.
+
+In this example, the input data consists of sentences, and the objective is binary classification (labels 0 or 1). A TensorFlow Hub pre-trained text embedding model, specifically `google/nnlm-en-dim50/2`, is utilized as the first layer. This model is chosen for its efficiency in embedding sentences into vectors.
+
+Furthermore, models like `google/universal-sentence-encoder/4`, with 512-dimensional embeddings trained using a deep averaging network (DAN) encoder, provide a broader range of options depending on specific application needs.
+
+To implement this in practice, a Keras layer is created using TensorFlow Hub to embed sentences, ensuring consistent output dimensions (num_examples, embedding_dimension) regardless of input text length. This setup forms the foundation for constructing a robust neural network model capable of effectively processing and classifying textual data.
+
+The classifier is constructed by stacking layers sequentially:
+
+1. **First Layer**: Utilizes a TensorFlow Hub layer with a pre-trained Saved Model (`google/nnlm-en-dim50/2`). This layer converts sentences into embedding vectors by tokenizing each sentence, embedding the tokens, and then combining them into a fixed-length vector of dimensions (num_examples, embedding_dimension=50).
+
+2. **Second Layer**: A fully-connected (Dense) layer follows the embedding layer with 16 hidden units.
+
+3. **Output Layer**: The final layer is a densely connected layer with a single output node, suitable for binary classification tasks.
+
+The model is then compiled with:
+- **Loss Function**: `binary_crossentropy`, chosen for its effectiveness in measuring the difference between probability distributions, aligning with the model's output of logits (linear activation).
+- **Optimizer**: Typically chosen to optimize model weights during training.
+
+These choices ensure the model is configured to effectively handle binary classification tasks, preparing it to learn from the training data using specified loss and optimization methods.
+
+### Results
+ML model outputs are attached. It provides accuracy, precision, recall and f1-score:
+
+<img width="1372" alt="Screenshot 2024-07-13 at 12 06 40 PM" src="https://github.com/user-attachments/assets/41ad2dbf-b17f-46e8-a388-705ba75bfc49">
+
+
+
